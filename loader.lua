@@ -1,35 +1,43 @@
--- ScribblEXplorer V6: Full Explorer Edition
+-- ScribblEXplorer V6: ty for using btw
 local HttpService = game:GetService("HttpService")
-local Assets = loadstring(game:HttpGet("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/Assets.lua"))()
+local BaseUrl = "https://raw.githubusercontent.com/ScribbleDevelopment/ScribblEXplorer/main/"
+
+-- Load Assets & Config
+local Assets = loadstring(game:HttpGet(BaseUrl .. "assets.lua"))()
+local Config = HttpService:JSONDecode(game:HttpGet(BaseUrl .. "config.json"))
 
 -- UI Setup
 local Gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
-local Main = Assets.CreateFrame(Gui, UDim2.new(0.6, 0, 0.7, 0), UDim2.new(0.2, 0, 0.15, 0), Color3.fromRGB(20, 20, 30))
+local Main = Assets.CosmicStyle(Instance.new("Frame", Gui))
+Main.Size = UDim2.new(0.6, 0, 0.7, 0)
+Main.Position = UDim2.new(0.2, 0, 0.15, 0)
+Main.Active = true
+Main.Draggable = true
 
--- Explorer Panel (Left)
 local ExplorerHolder = Instance.new("ScrollingFrame", Main)
 ExplorerHolder.Size = UDim2.new(0.4, 0, 0.9, 0)
 ExplorerHolder.Position = UDim2.new(0.02, 0, 0.05, 0)
 ExplorerHolder.BackgroundTransparency = 1
 
--- Properties Panel (Right)
-local PropHolder = Assets.CreateFrame(Main, UDim2.new(0.5, 0, 0.9, 0), UDim2.new(0.45, 0, 0.05, 0), Color3.fromRGB(25, 25, 35))
+local PropHolder = Assets.CosmicStyle(Instance.new("Frame", Main))
+PropHolder.Size = UDim2.new(0.5, 0, 0.9, 0)
+PropHolder.Position = UDim2.new(0.45, 0, 0.05, 0)
 
 -- Recursive Tree Engine
-local function PopulateExplorer(parent, depth)
+local function Populate(parent, depth)
     for _, child in ipairs(parent:GetChildren()) do
         local btn = Assets.CreateTreeButton(ExplorerHolder, child.Name, depth)
         
         btn.MouseButton1Click:Connect(function()
-            -- Show Properties for selected instance
             PropHolder:ClearAllChildren()
             local NameLabel = Instance.new("TextLabel", PropHolder)
-            NameLabel.Text = "Selected: " .. child.Name
+            NameLabel.Text = "Instance: " .. child.Name
             NameLabel.Size = UDim2.new(1, 0, 0, 30)
+            NameLabel.BackgroundTransparency = 1
+            NameLabel.TextColor3 = Color3.new(1,1,1)
             
-            -- Add Property Change Box
             local PropBox = Instance.new("TextBox", PropHolder)
-            PropBox.PlaceholderText = "Change Property (Name=Value)"
+            PropBox.PlaceholderText = "Property=Value"
             PropBox.Size = UDim2.new(0.9, 0, 0, 40)
             PropBox.Position = UDim2.new(0.05, 0, 0.2, 0)
             PropBox.FocusLost:Connect(function(enter)
@@ -40,12 +48,12 @@ local function PopulateExplorer(parent, depth)
             end)
         end)
         
-        if #child:GetChildren() > 0 then
-            PopulateExplorer(child, depth + 1)
+        if #child:GetChildren() > 0 and depth < 3 then
+            Populate(child, depth + 1)
         end
     end
 end
 
 -- Refresh Initial Tree
-PopulateExplorer(game:GetService("Workspace"), 0)
-PopulateExplorer(game:GetService("Players"), 0)
+Populate(game:GetService("Workspace"), 0)
+Populate(game:GetService("Players"), 0)
