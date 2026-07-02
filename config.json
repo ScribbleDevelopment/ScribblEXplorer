@@ -1,22 +1,10 @@
 {
-  "Meta": {
-    "Version": "v5.5 [Cosmic Edition]",
-    "ThemeName": "ScribblEXplorer Supernova Void"
+  "theme": {
+    "main_color": [13, 11, 22],
+    "accent_color": [157, 0, 255],
+    "text_color": [240, 235, 255]
   },
-  "Styles": {
-    "MainBackground": [13, 11, 22],
-    "AccentColor": [157, 0, 255],
-    "HeaderBackground": [25, 16, 44],
-    "PanelBackground": [19, 15, 34],
-    "InnerBackground": [8, 6, 15],
-    "TextColor": [240, 235, 255],
-    "OpTextColor": [255, 200, 0],
-    "OutputTextColor": [0, 255, 180],
-    "CornerRadius": 10,
-    "StrokeThickness": 2
-  },
-  "TargetRepAddresses": {
-    "PrimaryIY": "https://raw.githubusercontent.com/EdgeIY/infiniteyield/refs/heads/master/source",
-    "FallbackIY": "https://raw.githubusercontent.com/EdgeYNN/InfiniteYield/master/source"
+  "links": {
+    "iy": "https://raw.githubusercontent.com/EdgeIY/infiniteyield/refs/heads/master/source"
   }
 }
