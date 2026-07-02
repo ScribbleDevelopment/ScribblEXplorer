@@ -7,7 +7,7 @@ local LocalPlayer = Players.LocalPlayer
 
 -- CONFIGURATION: Point these to your Raw GitHub URLs
 local CONFIG_URL = "https://raw.githubusercontent.com/ScribbleDevelopment/ScribblEXplorer/main/config.json"
-local ASSET_LIB_URL = "https://raw.githubusercontent.com/ScribbleDevelopment/ScribblEXplorer/main/Assets.lua"
+local ASSET_LIB_URL = "https://raw.githubusercontent.com/ScribbleDevelopment/ScribblEXplorer/main/assets.lua"
 
 -- 1. Load Asset Library and Config
 local success, AssetLibrary = pcall(function() return loadstring(game:HttpGet(ASSET_LIB_URL))() end)
